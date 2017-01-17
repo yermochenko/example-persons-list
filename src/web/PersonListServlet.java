@@ -31,7 +31,7 @@ public class PersonListServlet extends HttpServlet {
             s.setConnection(c);
             List<Person> persons = s.readAll();
             req.setAttribute("persons", persons);
-            getServletContext().getRequestDispatcher("/WEB-INF/index.html")
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp")
                                                            .forward(req, resp);
         } catch (ClassNotFoundException | SQLException e) {
             throw new ServletException(e);
