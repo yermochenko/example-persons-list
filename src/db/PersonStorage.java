@@ -40,7 +40,11 @@ public class PersonStorage {
                 person.setCitizen(r.getBoolean("is_citizen"));
                 persons.add(person);
             }
+            c.commit();
             return persons;
+        } catch(SQLException e) {
+            try { c.rollback(); } catch(SQLException e1) {}
+            throw e;
         } finally {
             try { r.close(); } catch(NullPointerException | SQLException e) {}
             try { s.close(); } catch(NullPointerException | SQLException e) {}

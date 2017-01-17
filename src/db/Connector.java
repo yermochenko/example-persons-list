@@ -20,6 +20,9 @@ public class Connector {
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+        Connection c;
+        c = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+        c.setAutoCommit(false);
+        return c;
     }
 }
