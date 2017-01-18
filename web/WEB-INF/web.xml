@@ -6,6 +6,10 @@
          version="3.1">
     <display-name>Список людей</display-name>
 
+    <listener>
+        <listener-class>web.Initializator</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>PersonListServlet</servlet-name>
         <servlet-class>web.PersonListServlet</servlet-class>
@@ -13,6 +17,33 @@
     <servlet-mapping>
         <servlet-name>PersonListServlet</servlet-name>
         <url-pattern>/index.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PersonEditServlet</servlet-name>
+        <servlet-class>web.PersonEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PersonEditServlet</servlet-name>
+        <url-pattern>/edit.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PersonSaveServlet</servlet-name>
+        <servlet-class>web.PersonSaveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PersonSaveServlet</servlet-name>
+        <url-pattern>/save.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PersonDeleteServlet</servlet-name>
+        <servlet-class>web.PersonDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PersonDeleteServlet</servlet-name>
+        <url-pattern>/delete.html</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

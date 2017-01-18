@@ -33,12 +33,15 @@
                     <TD>
                         <fmt:formatNumber value="${person.id}" pattern="00"/>
                     </TD>
+                    <c:url var="editUrl" value="/edit.html">
+                        <c:param name="id" value="${person.id}"/>
+                    </c:url>
                     <c:set var="fName"
                            value="${fn:substring(person.firstName, 0, 1)}"/>
                     <c:set var="mName"
                            value="${fn:substring(person.middleName, 0, 1)}"/>
                     <TD>
-                        ${person.lastName}&nbsp;${fName}.&nbsp;${mName}.
+                        <A href="${editUrl}">${person.lastName}&nbsp;${fName}.&nbsp;${mName}.</A>
                     </TD>
                     <TD>
                         <fmt:formatNumber value="${person.height}"
@@ -57,5 +60,7 @@
                 </TR>
             </c:forEach>
         </TABLE>
+        <c:url var="editUrl" value="/edit.html"/>
+        <A href="${editUrl}">Добавить человека</A>
     </BODY>
 </HTML>
