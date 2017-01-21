@@ -19,6 +19,22 @@ CREATE TABLE `person` (
     PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARACTER SET utf8;
 
+CREATE TABLE `type` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE `contact` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `person_id` INTEGER NOT NULL,
+    `type_id` INTEGER NOT NULL,
+    `value` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE RESTRICT ON DELETE CASCADE,
+    FOREIGN KEY (`type_id`) REFERENCES `type` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+) ENGINE=INNODB DEFAULT CHARACTER SET utf8;
+
 /* вставка нескольких значений в таблицу */
 INSERT INTO `person`
 (`id`, `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen`)
@@ -33,3 +49,16 @@ VALUES
 (8,    "Любовь",     "Сидоровна",   "Иванова",   157.0,    67.2,     TRUE),
 (9,    "Надежда",    "Сидоровна",   "Петрова",   171.5,    73.5,     FALSE),
 (10,   "Вера",       "Ивановна",    "Сидорова",  162.0,    56.1,     TRUE);
+
+INSERT INTO `type`
+(`id`, `name`)
+VALUES
+(1, "телефон"),
+(2, "e-mail");
+
+INSERT INTO `contact`
+(`id`, `person_id`, `type_id`, `value`)
+VALUES
+(1, 1, 1, "+375-29-123-45-67"),
+(2, 1, 2, "ivanov@company.by"),
+(3, 2, 1, "+375-33-987-65-43");
