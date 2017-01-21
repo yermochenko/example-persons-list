@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Person {
     private Integer id;
     private String firstName;
@@ -8,6 +10,7 @@ public class Person {
     private Double height;
     private Double weight;
     private boolean citizen;
+    private List<Contact> contacts;
 
     public Integer getId() {
         return id;
@@ -63,5 +66,13 @@ public class Person {
 
     public void setCitizen(boolean citizen) {
         this.citizen = citizen;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 }
