@@ -8,31 +8,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.Person;
+import domain.Type;
 
-public class PersonStorage extends BasicStorage {
-    public List<Person> readAll() throws SQLException {
-        String sql = "SELECT `id`, `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen` FROM `person`";
+public class TypeStorage extends BasicStorage {
+    public List<Type> readAll() throws SQLException {
+        String sql = "SELECT `id`, `name` FROM `type`";
         Connection c = getConnection();
         Statement s = null;
         ResultSet r = null;
         try {
             s = c.createStatement();
             r = s.executeQuery(sql);
-            List<Person> persons = new ArrayList<>();
+            List<Type> types = new ArrayList<>();
             while(r.next()) {
-                Person person = new Person();
-                person.setId(r.getInt("id"));
-                person.setFirstName(r.getString("first_name"));
-                person.setMiddleName(r.getString("middle_name"));
-                person.setLastName(r.getString("last_name"));
-                person.setHeight(r.getDouble("height"));
-                person.setWeight(r.getDouble("weight"));
-                person.setCitizen(r.getBoolean("is_citizen"));
-                persons.add(person);
+                Type type = new Type();
+                type.setId(r.getInt("id"));
+                type.setName(r.getString("name"));
+                types.add(type);
             }
             c.commit();
-            return persons;
+            return types;
         } catch(SQLException e) {
             try { c.rollback(); } catch(SQLException e1) {}
             throw e;
@@ -42,8 +37,8 @@ public class PersonStorage extends BasicStorage {
         }
     }
 
-    public Person readById(Integer id) throws SQLException {
-        String sql = "SELECT `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen` FROM `person` WHERE `id` = ?";
+    public Type readById(Integer id) throws SQLException {
+        String sql = "SELECT `name` FROM `type` WHERE `id` = ?";
         Connection c = getConnection();
         PreparedStatement s = null;
         ResultSet r = null;
@@ -51,19 +46,14 @@ public class PersonStorage extends BasicStorage {
             s = c.prepareStatement(sql);
             s.setInt(1, id);
             r = s.executeQuery();
-            Person person = null;
+            Type type = null;
             if(r.next()) {
-                person = new Person();
-                person.setId(id);
-                person.setFirstName(r.getString("first_name"));
-                person.setMiddleName(r.getString("middle_name"));
-                person.setLastName(r.getString("last_name"));
-                person.setHeight(r.getDouble("height"));
-                person.setWeight(r.getDouble("weight"));
-                person.setCitizen(r.getBoolean("is_citizen"));
+                type = new Type();
+                type.setId(id);
+                type.setName(r.getString("name"));
             }
             c.commit();
-            return person;
+            return type;
         } catch(SQLException e) {
             try { c.rollback(); } catch(SQLException e1) {}
             throw e;
@@ -73,19 +63,14 @@ public class PersonStorage extends BasicStorage {
         }
     }
 
-    public Integer create(Person person) throws SQLException {
-        String sql = "INSERT INTO `person`(`first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen`) VALUES (?, ?, ?, ?, ?, ?)";
+    public Integer create(Type type) throws SQLException {
+        String sql = "INSERT INTO `type`(`name`) VALUES (?)";
         Connection c = getConnection();
         PreparedStatement s = null;
         ResultSet r = null;
         try {
             s = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            s.setString(1, person.getFirstName());
-            s.setString(2, person.getMiddleName());
-            s.setString(3, person.getLastName());
-            s.setDouble(4, person.getHeight());
-            s.setDouble(5, person.getWeight());
-            s.setBoolean(6, person.isCitizen());
+            s.setString(1, type.getName());
             s.executeUpdate();
             r = s.getGeneratedKeys();
             Integer id = null;
@@ -103,19 +88,14 @@ public class PersonStorage extends BasicStorage {
         }
     }
 
-    public void update(Person person) throws SQLException {
-        String sql = "UPDATE `person` SET `first_name` = ?, `middle_name` = ?, `last_name` = ?, `height` = ?, `weight` = ?, `is_citizen` = ? WHERE `id` = ?";
+    public void update(Type type) throws SQLException {
+        String sql = "UPDATE `type` SET `name` = ? WHERE `id` = ?";
         Connection c = getConnection();
         PreparedStatement s = null;
         try {
             s = c.prepareStatement(sql);
-            s.setString(1, person.getFirstName());
-            s.setString(2, person.getMiddleName());
-            s.setString(3, person.getLastName());
-            s.setDouble(4, person.getHeight());
-            s.setDouble(5, person.getWeight());
-            s.setBoolean(6, person.isCitizen());
-            s.setInt(7, person.getId());
+            s.setString(1, type.getName());
+            s.setInt(2, type.getId());
             s.executeUpdate();
             c.commit();
         } catch(SQLException e) {
@@ -126,17 +106,17 @@ public class PersonStorage extends BasicStorage {
         }
     }
 
-    public void save(Person person) throws SQLException {
-        if(person.getId() != null) {
-            update(person);
+    public void save(Type type) throws SQLException {
+        if(type.getId() != null) {
+            update(type);
         } else {
-            Integer id = create(person);
-            person.setId(id);
+            Integer id = create(type);
+            type.setId(id);
         }
     }
 
     public void delete(Integer id) throws SQLException {
-        String sql = "DELETE FROM `person` WHERE `id` = ?";
+        String sql = "DELETE FROM `type` WHERE `id` = ?";
         Connection c = getConnection();
         PreparedStatement s = null;
         try {

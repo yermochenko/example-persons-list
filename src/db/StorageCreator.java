@@ -16,6 +16,12 @@ public class StorageCreator {
         return storage;
     }
 
+    public TypeStorage newTypeStorage() {
+        TypeStorage storage = new TypeStorage();
+        storage.setConnection(connection);
+        return storage;
+    }
+
     public void close() {
         try { connection.close(); } catch(SQLException e) {}
     }

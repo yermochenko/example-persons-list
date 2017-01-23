@@ -46,6 +46,42 @@
         <url-pattern>/delete.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>TypeListServlet</servlet-name>
+        <servlet-class>web.TypeListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TypeListServlet</servlet-name>
+        <url-pattern>/type/index.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TypeEditServlet</servlet-name>
+        <servlet-class>web.TypeEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TypeEditServlet</servlet-name>
+        <url-pattern>/type/edit.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TypeSaveServlet</servlet-name>
+        <servlet-class>web.TypeSaveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TypeSaveServlet</servlet-name>
+        <url-pattern>/type/save.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TypeDeleteServlet</servlet-name>
+        <servlet-class>web.TypeDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TypeDeleteServlet</servlet-name>
+        <url-pattern>/type/delete.html</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
