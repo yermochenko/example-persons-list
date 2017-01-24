@@ -24,7 +24,7 @@ public class PersonEditServlet extends HttpServlet {
             try {
                 storageCreator = new StorageCreator();
                 PersonStorage s = storageCreator.newPersonStorage();
-                Person person = s.readById(id);
+                Person person = s.findById(id);
                 req.setAttribute("person", person);
             } catch(SQLException e) {
                 throw new ServletException(e);

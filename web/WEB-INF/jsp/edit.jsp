@@ -18,40 +18,75 @@
                 <c:otherwise>Добавление данных о человеке</c:otherwise>
             </c:choose>
         </TITLE>
+        <STYLE type="text/css">
+            BODY {
+                padding: 0;
+            }
+            .person, .contacts {
+                float: left;
+                margin: 0;
+                padding: 20px;
+            }
+            TABLE {
+                border-collapse: collapse;
+            }
+            TH, TD {
+                border: 1px solid black;
+                padding: 5px 30px 5px 10px;
+            }
+        </STYLE>
     </HEAD>
     <BODY>
-        <c:url var="saveUrl" value="/save.html"/>
-        <FORM action="${saveUrl}" method="post">
-            <c:if test="${not empty person.id}">
-                <INPUT type="hidden" name="id" value="${person.id}">
-            </c:if>
-            Фамилия:<BR>
-            <INPUT type="text" name="last-name" value="${person.lastName}"><BR>
-            Имя:<BR>
-            <INPUT type="text" name="first-name" value="${person.firstName}"><BR>
-            Отчество:<BR>
-            <INPUT type="text" name="middle-name" value="${person.middleName}"><BR>
-            Рост:<BR>
-            <fmt:formatNumber var="height" value="${person.height}" pattern="#.##"/>
-            <INPUT type="text" name="height" value="${height}"><BR>
-            Вес:<BR>
-            <fmt:formatNumber var="weight" value="${person.weight}" pattern="#.##"/>
-            <INPUT type="text" name="weight" value="${weight}"><BR>
-            <c:if test="${person.citizen}">
-                <c:set var="checked" value="checked"/>
-            </c:if>
-            <INPUT type="checkbox" name="citizen" ${checked}> Гражданство<BR>
-            <BUTTON type="submit">Сохранить</BUTTON><BR>
-            <BUTTON type="reset">Сбросить</BUTTON><BR>
-        </FORM>
-        <c:if test="${not empty person.id}">
-            <c:url var="deleteUrl" value="/delete.html"/>
-            <FORM action="${deleteUrl}" method="post">
-                <INPUT type="hidden" name="id" value="${person.id}">
-                <BUTTON type="submit">Удалить</BUTTON>
+        <DIV class="person">
+            <c:url var="saveUrl" value="/save.html"/>
+            <FORM action="${saveUrl}" method="post">
+                <c:if test="${not empty person.id}">
+                    <INPUT type="hidden" name="id" value="${person.id}">
+                </c:if>
+                Фамилия:<BR>
+                <INPUT type="text" name="last-name" value="${person.lastName}"><BR>
+                Имя:<BR>
+                <INPUT type="text" name="first-name" value="${person.firstName}"><BR>
+                Отчество:<BR>
+                <INPUT type="text" name="middle-name" value="${person.middleName}"><BR>
+                Рост:<BR>
+                <fmt:formatNumber var="height" value="${person.height}" pattern="#.##"/>
+                <INPUT type="text" name="height" value="${height}"><BR>
+                Вес:<BR>
+                <fmt:formatNumber var="weight" value="${person.weight}" pattern="#.##"/>
+                <INPUT type="text" name="weight" value="${weight}"><BR>
+                <c:if test="${person.citizen}">
+                    <c:set var="checked" value="checked"/>
+                </c:if>
+                <INPUT type="checkbox" name="citizen" ${checked}> Гражданство<BR>
+                <BUTTON type="submit">Сохранить</BUTTON><BR>
+                <BUTTON type="reset">Сбросить</BUTTON><BR>
             </FORM>
+            <c:if test="${not empty person.id}">
+                <c:url var="deleteUrl" value="/delete.html"/>
+                <FORM action="${deleteUrl}" method="post">
+                    <INPUT type="hidden" name="id" value="${person.id}">
+                    <BUTTON type="submit">Удалить</BUTTON>
+                </FORM>
+            </c:if>
+            <c:url var="indexUrl" value="/index.html"/>
+            <A href="${indexUrl}">Вернуться назад</A>
+        </DIV>
+        <c:if test="${not empty person.id}">
+            <DIV class="contacts">
+                <TABLE>
+                    <TR>
+                        <TH>Тип контакта</TH>
+                        <TH>Значение</TH>
+                    </TR>
+                    <c:forEach var="contact" items="${person.contacts}">
+                        <TR>
+                            <TD>${contact.type.name}</TD>
+                            <TD>${contact.value}</TD>
+                        </TR>
+                    </c:forEach>
+                </TABLE>
+            </DIV>
         </c:if>
-        <c:url var="indexUrl" value="/index.html"/>
-        <A href="${indexUrl}">Вернуться назад</A>
     </BODY>
 </HTML>

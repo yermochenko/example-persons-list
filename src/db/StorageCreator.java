@@ -13,11 +13,19 @@ public class StorageCreator {
     public PersonStorage newPersonStorage() {
         PersonStorage storage = new PersonStorage();
         storage.setConnection(connection);
+        storage.setContactStorage(newContactStorage());
+        storage.setTypeStorage(newTypeStorage());
         return storage;
     }
 
     public TypeStorage newTypeStorage() {
         TypeStorage storage = new TypeStorage();
+        storage.setConnection(connection);
+        return storage;
+    }
+
+    public ContactStorage newContactStorage() {
+        ContactStorage storage = new ContactStorage();
         storage.setConnection(connection);
         return storage;
     }

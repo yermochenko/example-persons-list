@@ -8,9 +8,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.Contact;
 import domain.Person;
+import domain.Type;
 
 public class PersonStorage extends BasicStorage {
+    private ContactStorage contactStorage;
+    private TypeStorage typeStorage;
+
+    public void setContactStorage(ContactStorage contactStorage) {
+        this.contactStorage = contactStorage;
+    }
+
+    public void setTypeStorage(TypeStorage typeStrorage) {
+        this.typeStorage = typeStrorage;
+    }
+
     public List<Person> readAll() throws SQLException {
         String sql = "SELECT `id`, `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen` FROM `person`";
         Connection c = getConnection();
@@ -71,6 +84,20 @@ public class PersonStorage extends BasicStorage {
             try { r.close(); } catch(NullPointerException | SQLException e) {}
             try { s.close(); } catch(NullPointerException | SQLException e) {}
         }
+    }
+
+    public Person findById(Integer id) throws SQLException {
+        Person person = readById(id);
+        if(person != null) {
+            List<Contact> contacts = contactStorage.readByPersonId(id);
+            person.setContacts(contacts);
+            for(Contact contact : contacts) {
+                contact.setPerson(person);
+                Type type = typeStorage.readById(contact.getType().getId());
+                contact.setType(type);
+            }
+        }
+        return person;
     }
 
     public Integer create(Person person) throws SQLException {
