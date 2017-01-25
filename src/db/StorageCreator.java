@@ -5,29 +5,40 @@ import java.sql.SQLException;
 
 public class StorageCreator {
     private Connection connection;
+    private PersonStorage personStorage;
+    private TypeStorage typeStorage;
+    private ContactStorage contactStorage;
 
     public StorageCreator() throws SQLException {
         connection = Connector.getConnection();
     }
 
     public PersonStorage newPersonStorage() {
-        PersonStorage storage = new PersonStorage();
-        storage.setConnection(connection);
-        storage.setContactStorage(newContactStorage());
-        storage.setTypeStorage(newTypeStorage());
-        return storage;
+        if(personStorage == null) {
+            personStorage = new PersonStorage();
+            personStorage.setConnection(connection);
+            personStorage.setContactStorage(newContactStorage());
+            personStorage.setTypeStorage(newTypeStorage());
+        }
+        return personStorage;
     }
 
     public TypeStorage newTypeStorage() {
-        TypeStorage storage = new TypeStorage();
-        storage.setConnection(connection);
-        return storage;
+        if(typeStorage == null) {
+            typeStorage = new TypeStorage();
+            typeStorage.setConnection(connection);
+        }
+        return typeStorage;
     }
 
     public ContactStorage newContactStorage() {
-        ContactStorage storage = new ContactStorage();
-        storage.setConnection(connection);
-        return storage;
+        if(contactStorage == null) {
+            contactStorage = new ContactStorage();
+            contactStorage.setConnection(connection);
+            contactStorage.setPersonStorage(newPersonStorage());
+            contactStorage.setTypeStorage(newTypeStorage());
+        }
+        return contactStorage;
     }
 
     public void close() {

@@ -13,6 +13,17 @@ import domain.Person;
 import domain.Type;
 
 public class ContactStorage extends BasicStorage {
+    private PersonStorage personStorage;
+    private TypeStorage typeStorage;
+
+    public void setPersonStorage(PersonStorage personStorage) {
+        this.personStorage = personStorage;
+    }
+
+    public void setTypeStorage(TypeStorage typeStorage) {
+        this.typeStorage = typeStorage;
+    }
+
     public List<Contact> readByPersonId(Integer id) throws SQLException {
         String sql = "SELECT `id`, `type_id`, `value` FROM `contact` WHERE `person_id` = ?";
         Connection c = getConnection();
@@ -72,6 +83,17 @@ public class ContactStorage extends BasicStorage {
             try { r.close(); } catch(NullPointerException | SQLException e) {}
             try { s.close(); } catch(NullPointerException | SQLException e) {}
         }
+    }
+
+    public Contact findById(Integer id) throws SQLException {
+        Contact contact = readById(id);
+        if(contact != null) {
+            Person person = personStorage.readById(contact.getPerson().getId());
+            contact.setPerson(person);
+            Type type = typeStorage.readById(contact.getType().getId());
+            contact.setType(type);
+        }
+        return contact;
     }
 
     public Integer create(Contact contact) throws SQLException {

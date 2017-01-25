@@ -39,6 +39,8 @@
             </c:forEach>
         </TABLE>
         <c:url var="editUrl" value="/type/edit.html"/>
-        <A href="${editUrl}">Добавить тип</A>
+        <A href="${editUrl}">Добавить тип</A><BR>
+        <c:url var="indexUrl" value="/index.html"/>
+        <A href="${indexUrl}">На главную</A>
     </BODY>
 </HTML>

@@ -82,10 +82,17 @@
                     <c:forEach var="contact" items="${person.contacts}">
                         <TR>
                             <TD>${contact.type.name}</TD>
-                            <TD>${contact.value}</TD>
+                            <c:url var="editUrl" value="/contact/edit.html">
+                                <c:param name="id" value="${contact.id}"/>
+                            </c:url>
+                            <TD><A href="${editUrl}">${contact.value}</A></TD>
                         </TR>
                     </c:forEach>
                 </TABLE>
+                <c:url var="editUrl" value="/contact/edit.html">
+                    <c:param name="person" value="${person.id}"/>
+                </c:url>
+                <A href="${editUrl}">Добавить контакт</A>
             </DIV>
         </c:if>
     </BODY>

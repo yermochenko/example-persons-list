@@ -82,6 +82,33 @@
         <url-pattern>/type/delete.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ContactEditServlet</servlet-name>
+        <servlet-class>web.ContactEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactEditServlet</servlet-name>
+        <url-pattern>/contact/edit.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ContactSaveServlet</servlet-name>
+        <servlet-class>web.ContactSaveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactSaveServlet</servlet-name>
+        <url-pattern>/contact/save.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ContactDeleteServlet</servlet-name>
+        <servlet-class>web.ContactDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactDeleteServlet</servlet-name>
+        <url-pattern>/contact/delete.html</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
