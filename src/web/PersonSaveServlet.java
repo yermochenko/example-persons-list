@@ -2,6 +2,8 @@ package web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import db.PersonStorage;
 import db.StorageCreator;
 import domain.Person;
+import domain.Sex;
 
 public class PersonSaveServlet extends HttpServlet {
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -49,8 +54,10 @@ public class PersonSaveServlet extends HttpServlet {
             person.setHeight(Double.parseDouble(req.getParameter("height")));
             person.setWeight(Double.parseDouble(req.getParameter("weight")));
             person.setCitizen(req.getParameter("citizen") != null);
+            person.setSex(Sex.values()[Integer.parseInt(req.getParameter("sex"))]);
+            person.setBirthday(DATE_FORMAT.parse(req.getParameter("birthday")));
             return person;
-        } catch(NumberFormatException | NullPointerException e) {
+        } catch(NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException | ParseException e) {
             return null;
         }
     }

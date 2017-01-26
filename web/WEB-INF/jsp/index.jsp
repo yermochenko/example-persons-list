@@ -24,17 +24,15 @@
         <P style="text-align: right">Вы вошли, как пользователь ${user.login}<BR><A href="${logoutUrl}">выйти</A></P>
         <TABLE>
             <TR>
-                <TH>ID</TH>
                 <TH>Фамилия и инициалы</TH>
                 <TH>Рост</TH>
                 <TH>Вес</TH>
                 <TH>Гражданство</TH>
+                <TH>Пол</TH>
+                <TH>Дата рождения</TH>
             </TR>
             <c:forEach var="person" items="${persons}">
                 <TR>
-                    <TD>
-                        <fmt:formatNumber value="${person.id}" pattern="00"/>
-                    </TD>
                     <c:url var="editUrl" value="/edit.html">
                         <c:param name="id" value="${person.id}"/>
                     </c:url>
@@ -58,6 +56,15 @@
                             <c:when test="${person.citizen}">Да</c:when>
                             <c:otherwise>Нет</c:otherwise>
                         </c:choose>
+                    </TD>
+                    <TD>
+                        <c:choose>
+                            <c:when test="${person.sex == 'MALE'}">М</c:when>
+                            <c:when test="${person.sex == 'FEMALE'}">Ж</c:when>
+                        </c:choose>
+                    </TD>
+                    <TD>
+                        <fmt:formatDate value="${person.birthday}" pattern="dd.MM.yyyy"/>
                     </TD>
                 </TR>
             </c:forEach>

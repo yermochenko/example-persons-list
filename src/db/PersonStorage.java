@@ -10,6 +10,7 @@ import java.util.List;
 
 import domain.Contact;
 import domain.Person;
+import domain.Sex;
 import domain.Type;
 
 public class PersonStorage extends BasicStorage {
@@ -25,7 +26,7 @@ public class PersonStorage extends BasicStorage {
     }
 
     public List<Person> readAll() throws SQLException {
-        String sql = "SELECT `id`, `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen` FROM `person`";
+        String sql = "SELECT `id`, `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen`, `sex`, `birthday` FROM `person`";
         Connection c = getConnection();
         Statement s = null;
         ResultSet r = null;
@@ -42,6 +43,8 @@ public class PersonStorage extends BasicStorage {
                 person.setHeight(r.getDouble("height"));
                 person.setWeight(r.getDouble("weight"));
                 person.setCitizen(r.getBoolean("is_citizen"));
+                person.setSex(Sex.values()[r.getInt("sex")]);
+                person.setBirthday(new java.util.Date(r.getDate("birthday").getTime()));
                 persons.add(person);
             }
             c.commit();
@@ -56,7 +59,7 @@ public class PersonStorage extends BasicStorage {
     }
 
     public Person readById(Integer id) throws SQLException {
-        String sql = "SELECT `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen` FROM `person` WHERE `id` = ?";
+        String sql = "SELECT `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen`, `sex`, `birthday` FROM `person` WHERE `id` = ?";
         Connection c = getConnection();
         PreparedStatement s = null;
         ResultSet r = null;
@@ -74,6 +77,8 @@ public class PersonStorage extends BasicStorage {
                 person.setHeight(r.getDouble("height"));
                 person.setWeight(r.getDouble("weight"));
                 person.setCitizen(r.getBoolean("is_citizen"));
+                person.setSex(Sex.values()[r.getInt("sex")]);
+                person.setBirthday(new java.util.Date(r.getDate("birthday").getTime()));
             }
             c.commit();
             return person;
@@ -101,7 +106,7 @@ public class PersonStorage extends BasicStorage {
     }
 
     public Integer create(Person person) throws SQLException {
-        String sql = "INSERT INTO `person`(`first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen`) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `person`(`first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen`, `sex`, `birthday`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         Connection c = getConnection();
         PreparedStatement s = null;
         ResultSet r = null;
@@ -113,6 +118,8 @@ public class PersonStorage extends BasicStorage {
             s.setDouble(4, person.getHeight());
             s.setDouble(5, person.getWeight());
             s.setBoolean(6, person.isCitizen());
+            s.setInt(7, person.getSex().ordinal());
+            s.setDate(8, new java.sql.Date(person.getBirthday().getTime()));
             s.executeUpdate();
             r = s.getGeneratedKeys();
             Integer id = null;
@@ -131,7 +138,7 @@ public class PersonStorage extends BasicStorage {
     }
 
     public void update(Person person) throws SQLException {
-        String sql = "UPDATE `person` SET `first_name` = ?, `middle_name` = ?, `last_name` = ?, `height` = ?, `weight` = ?, `is_citizen` = ? WHERE `id` = ?";
+        String sql = "UPDATE `person` SET `first_name` = ?, `middle_name` = ?, `last_name` = ?, `height` = ?, `weight` = ?, `is_citizen` = ?, `sex` = ?, `birthday` = ? WHERE `id` = ?";
         Connection c = getConnection();
         PreparedStatement s = null;
         try {
@@ -142,7 +149,9 @@ public class PersonStorage extends BasicStorage {
             s.setDouble(4, person.getHeight());
             s.setDouble(5, person.getWeight());
             s.setBoolean(6, person.isCitizen());
-            s.setInt(7, person.getId());
+            s.setInt(7, person.getSex().ordinal());
+            s.setDate(8, new java.sql.Date(person.getBirthday().getTime()));
+            s.setInt(9, person.getId());
             s.executeUpdate();
             c.commit();
         } catch(SQLException e) {

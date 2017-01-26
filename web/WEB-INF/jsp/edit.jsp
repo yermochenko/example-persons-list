@@ -61,6 +61,28 @@
                     <c:set var="checked" value="checked"/>
                 </c:if>
                 <INPUT type="checkbox" name="citizen" ${checked}> Гражданство<BR>
+                Пол:<BR>
+                <c:choose>
+                    <c:when test="${person.sex == 'MALE'}">
+                        <c:set var="checked" value="checked"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:remove var="checked"/>
+                    </c:otherwise>
+                </c:choose>
+                <INPUT type="radio" name="sex" value="0" ${checked}> мужской<BR>
+                <c:choose>
+                    <c:when test="${person.sex == 'FEMALE'}">
+                        <c:set var="checked" value="checked"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:remove var="checked"/>
+                    </c:otherwise>
+                </c:choose>
+                <INPUT type="radio" name="sex" value="1" ${checked}> женский<BR>
+                Дата рождения:<BR>
+                <fmt:formatDate var="birthday" value="${person.birthday}" pattern="dd.MM.yyyy"/>
+                <INPUT type="text" name="birthday" value="${birthday}"><BR>
                 <BUTTON type="submit">Сохранить</BUTTON><BR>
                 <BUTTON type="reset">Сбросить</BUTTON><BR>
             </FORM>

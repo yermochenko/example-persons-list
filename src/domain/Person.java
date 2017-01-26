@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Date;
 import java.util.List;
 
 public class Person {
@@ -10,6 +11,8 @@ public class Person {
     private Double height;
     private Double weight;
     private boolean citizen;
+    private Sex sex;
+    private Date birthday;
     private List<Contact> contacts;
 
     public Integer getId() {
@@ -66,6 +69,22 @@ public class Person {
 
     public void setCitizen(boolean citizen) {
         this.citizen = citizen;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public List<Contact> getContacts() {
