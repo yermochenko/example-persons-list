@@ -35,6 +35,13 @@ CREATE TABLE `contact` (
     FOREIGN KEY (`type_id`) REFERENCES `type` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=INNODB DEFAULT CHARACTER SET utf8;
 
+CREATE TABLE `user` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `login` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARACTER SET utf8;
+
 /* вставка нескольких значений в таблицу */
 INSERT INTO `person`
 (`id`, `first_name`, `middle_name`, `last_name`, `height`, `weight`, `is_citizen`)
@@ -62,3 +69,8 @@ VALUES
 (1, 1, 1, "+375-29-123-45-67"),
 (2, 1, 2, "ivanov@company.by"),
 (3, 2, 1, "+375-33-987-65-43");
+
+INSERT INTO `user`
+(`login`, `password`)
+VALUES
+("root",  "root");

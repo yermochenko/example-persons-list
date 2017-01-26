@@ -20,6 +20,8 @@
         </TITLE>
     </HEAD>
     <BODY>
+        <c:url var="logoutUrl" value="/logout.html"/>
+        <P style="text-align: right">Вы вошли, как пользователь ${user.login}<BR><A href="${logoutUrl}">выйти</A></P>
         <c:url var="saveUrl" value="/contact/save.html"/>
         <FORM action="${saveUrl}" method="post">
             <c:choose>
